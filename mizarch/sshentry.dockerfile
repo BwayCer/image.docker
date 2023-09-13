@@ -23,7 +23,7 @@ RUN tmpInsertSshdConfig() { \
     tmpInsertSshdConfig "PasswordAuthentication no" "#PasswordAuthentication"
 # 創建安全殼密鑰文件
 RUN for typeName in rsa dsa ecdsa ed25519; do \
-        ssh-keygen -t "$typeName" -f "/etc/ssh//ssh_host_${typeName}_key" -P ""; \
+        ssh-keygen -t "$typeName" -f "/etc/ssh/ssh_host_${typeName}_key" -P ""; \
     done
 
 EXPOSE $sshExposePort
