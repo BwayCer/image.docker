@@ -8,9 +8,10 @@ ARG uid=1000
 
 # 鏡像站點： 臺灣
 RUN sed -i '1i \
-Server = http://ftp.tku.edu.tw/Linux/ArchLinux/$repo/os/$arch\n\
+Server = https://free.nchc.org.tw/arch/$repo/os/$arch\n\
+Server = https://archlinux.cs.nctu.edu.tw/$repo/os/$arch\n\
+Server = https://archlinux.ccns.ncku.edu.tw/archlinux/$repo/os/$arch\n\
 Server = https://shadow.ind.ntou.edu.tw/archlinux/$repo/os/$arch\n\
-Server = http://archlinux.cs.nctu.edu.tw/$repo/os/$arch\n\
 Server = https://ftp.yzu.edu.tw/Linux/archlinux/$repo/os/$arch\
 ' /etc/pacman.d/mirrorlist && cat /etc/pacman.d/mirrorlist
 
