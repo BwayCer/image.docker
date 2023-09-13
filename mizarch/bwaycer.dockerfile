@@ -20,10 +20,10 @@ RUN pacman -Sy --noconfirm pacman && \
     pacman -Su --noconfirm
 # 安裝常用程式包
 RUN pacman -S --noconfirm \
-        base base-devel bash-completion vim \
+        base base-devel bash-completion neovim \
         docker sudo openssh git tmux wget tree \
         rsync rclone p7zip cifs-utils && \
-    ln -s /usr/bin/vim /usr/bin/vi
+    ln -s /usr/bin/nvim /usr/bin/vi
     # openssh 為 git 與遠程端通訊的工具
     # cifs-utils 為 mount.cifs 共享遠程文件掛載工具
 
