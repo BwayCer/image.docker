@@ -5,6 +5,8 @@ FROM archlinux:latest
 
 ARG una=bwaycer
 ARG uid=1000
+# ARG dockerGid=973,974
+ARG dockerGid=-1
 
 # 中文語系包
 COPY ./repo/share/i18n_locales/zh_CN /usr/share/i18n/locales/zh_CN
@@ -28,11 +30,16 @@ Server = https://ftp.yzu.edu.tw/Linux/archlinux/$repo/os/$arch\
 RUN pacman -Sy --noconfirm pacman && \
     pacman -Su --noconfirm
 # 安裝常用程式包
+RUN pacman -Sy --noconfirm docker && { \
+        grep "docker:.*:${dockerGid}:" /etc/group &> /dev/null || \
+        groupmod -g "$dockerGid" docker; \
+    } || :
 RUN pacman -S --noconfirm \
         base base-devel bash-completion neovim \
-        docker sudo openssh git tmux wget tree \
-        rsync rclone p7zip cifs-utils && \
+        sudo openssh git tmux wget tree docker-compose && \
     ln -s /usr/bin/nvim /usr/bin/vi
+RUN pacman -S --noconfirm \
+        rsync rclone unzip p7zip cifs-utils
     # openssh 為 git 與遠程端通訊的工具
     # cifs-utils 為 mount.cifs 共享遠程文件掛載工具
 
