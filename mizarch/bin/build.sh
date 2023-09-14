@@ -13,4 +13,5 @@ _shBase_loadfile="$projectDir/bin/build.lib.sh"
 fnBuild "$@" -t "local/mizarch:bwaycer"  -f "$projectDir/bwaycer.dockerfile"  "$projectDir"
 fnBuild "$@" -t "local/mizarch:sshentry" -f "$projectDir/sshentry.dockerfile" "$projectDir"
 fnBuild "$@" -t "local/mizarch:latest"   -f "$projectDir/Dockerfile"          "$projectDir"
+fnBuild "$@" -t "local/deskarch:latest"  -f "$projectDir/desktop.dockerfile"  "$projectDir"
 

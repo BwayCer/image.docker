@@ -1,0 +1,71 @@
+# /bin/bash
+
+
+fnMain_install() {
+  set -ex
+
+  for argu in "$@"
+  do
+    case "$argu" in
+      docker-compose )
+        # https://github.com/docker/compose
+        pkgUrl="https://github.com/docker/compose"
+        pkgVersion=`
+          fnLib_listGithubReleasesVersions "docker/compose" |
+            grep -v -- "-rc" |
+            sed -n "1p"
+        `
+        cd /tmp
+        curl \
+          -L "$pkgUrl/releases/download/$pkgVersion/docker-compose-$(uname -s)-$(uname -m)" \
+          -o docker-compose
+        chmod +x docker-compose
+        mv docker-compose /usr/local/bin/docker-compose
+        ;;
+    esac
+  done
+}
+
+
+##shStyle 共享
+
+
+fnLib_makePkg() {
+  local who="$1"
+  local homePath="$2"
+  local pkgName="$3"
+
+  local currPath="$PWD"
+  local downloadDir="$homePath/Desktop/Download"
+  local pkgDir="$downloadDir/$pkgName"
+
+  [ -d "$downloadDir" ] || mkdir -p "$downloadDir"
+  [ ! -d "$pkgDir" ] || rm -rf "$pkgDir"
+
+  git clone "https://aur.archlinux.org/${pkgName}.git" "$pkgDir"
+  cd "$pkgDir"
+  # 必須切換到一般用戶
+  sudo -u "$who" makepkg -sic --noconfirm
+  # or
+  #   makepkg -s
+  #   sudo pacman -U ${pkgName}-*-x86_64.pkg.tar.xz
+  cd "$currPath"
+}
+
+
+fnLib_listGithubReleasesVersions() {
+  local ghProjectSymbol="$1"
+
+  curl -s "https://github.com/$ghProjectSymbol/releases" |
+    grep -o "/$ghProjectSymbol/releases/tag/[^\"]*" |
+    sed "s/.*\///"
+}
+
+
+##shStyle ###
+
+
+tmp="fnMain"
+while type "${tmp}_$1" >/dev/null 2>&1; do tmp+="_$1"; shift; done
+$tmp "$@"
+
