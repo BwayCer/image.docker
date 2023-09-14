@@ -1,7 +1,7 @@
 # MAINTAINER BwayCer (https://github.com/BwayCer/image.docker)
 
 
-FROM archlinux/base
+FROM archlinux:latest
 
 ARG una=bwaycer
 ARG uid=1000
