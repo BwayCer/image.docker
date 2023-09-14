@@ -13,3 +13,6 @@ RUN apk add --no-cache python3 py3-pip && \
 
 RUN apk add --no-cache go nodejs npm
 
+# Vim Plug:preservim/tagbar 的依賴
+RUN apk add --no-cache ctags
+
