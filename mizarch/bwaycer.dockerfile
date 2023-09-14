@@ -6,6 +6,15 @@ FROM archlinux:latest
 ARG una=bwaycer
 ARG uid=1000
 
+# 中文語系包
+COPY ./repo/share/i18n_locales/zh_CN /usr/share/i18n/locales/zh_CN
+COPY ./repo/share/i18n_locales/zh_TW /usr/share/i18n/locales/zh_TW
+COPY ./repo/share/locale/zh_TW/ /usr/share/locale/zh_TW/
+RUN chown root:root -R \
+        /usr/share/i18n/locales/zh_CN \
+        /usr/share/i18n/locales/zh_TW \
+        /usr/share/locale/zh_TW
+
 # 鏡像站點： 臺灣
 RUN sed -i '1i \
 Server = https://free.nchc.org.tw/arch/$repo/os/$arch\n\
