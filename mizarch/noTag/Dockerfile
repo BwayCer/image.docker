@@ -37,9 +37,39 @@ RUN pacman -S --noconfirm \
     rm -rf /var/cache/pacman/pkg/*
     # cifs-utils: mount.cifs 共享遠程文件掛載工具
 
-RUN pacman -S --noconfirm python python-pip && \
-    pip install pipenv
 
-RUN pacman -S --noconfirm \
-    ffmpeg \
-    go nodejs npm dart
+# 配合 YsEnv 環境
+RUN sudo -u "$una" sh -c \
+        'cd ~ && mkdir -p .cache .config .local/share .local/state .porygon'
+
+## 安裝開發環境程式包
+
+# Linux 桌面
+# RUN pacman -S --noconfirm gtk4 && \
+    # rm -rf /var/cache/pacman/pkg/*
+# RUN pacman -Sy --noconfirm qt6-base qt6-wayland && \
+    # rm -rf /var/cache/pacman/pkg/*
+
+# Python
+RUN pacman -S --noconfirm python python-pylint pyenv && \
+    rm -rf /var/cache/pacman/pkg/*
+    # python-pip 庫的 pip 只會一直跳要求使用 pacman -S python-xxx 的錯誤。
+    # 使用 python -m venv 替代 python-pipenv
+    # pyenv 依賴 C 編譯器 (base-devel)
+RUN pacman -S --noconfirm mesa
+    # mesa: OpenCV 依賴 libGL.so.1 共享庫
+
+# Node.js
+RUN pacman -S --noconfirm nodejs npm && \
+    rm -rf /var/cache/pacman/pkg/*
+
+# Flutter
+RUN sudo pacman -S --noconfirm clang cmake ninja pkgconf && \
+    rm -rf /var/cache/pacman/pkg/*
+RUN pacman -S --noconfirm gtk3 && \
+    rm -rf /var/cache/pacman/pkg/*
+
+# 開發 Web
+RUN sudo -u "$una" yay -S --noconfirm google-chrome && \
+    su "$una" -c "rm -rf ~/.cache/yay" && \
+    rm -rf /tmp/yay /var/cache/pacman/pkg/*
