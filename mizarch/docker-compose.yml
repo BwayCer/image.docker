@@ -1,0 +1,28 @@
+services:
+  bwaycer:
+    image: local/mizarch:bwaycer
+    build:
+      context: ./noTag
+      dockerfile: bwaycer.dockerfile
+      args:
+        version: latest
+        una: bwaycer
+        uid: 1000
+
+  stable:
+    image: local/mizarch:stable
+    depends_on:
+      - bwaycer
+    build:
+      context: ./noTag
+      dockerfile: Dockerfile
+      args:
+        una: bwaycer
+
+  develop:
+    image: local/mizarch:latest
+    depends_on:
+      - stable
+    build:
+      context: ./noTag
+      dockerfile: develop.dockerfile
