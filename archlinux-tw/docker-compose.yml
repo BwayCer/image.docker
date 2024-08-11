@@ -1,0 +1,10 @@
+services:
+  archlinux-tw:
+    image: bwaycer/archlinux-tw
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        version: latest
+        mirrorSite: TW
+        timezone: Asia/Taipei
