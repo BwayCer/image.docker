@@ -12,8 +12,13 @@ ArchLinux for TW
 其建立映像的命令如下：
 
 ```
-docker compose build --build-arg version=base-20240804.0.251467
+BuildTag=base-20240804.0.251467 docker compose build --build-arg version=base-20240804.0.251467
 ```
+
+
+## 不保留舊版本
+
+此項目並不是為保存 ArchLinux 的歷史版本，而是在實時滾動更新下去維持主機與容器的環境一致，以實現沙盒環境。
 
 
 ## 問題
