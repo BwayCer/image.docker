@@ -1,8 +1,8 @@
 services:
   archlinux-tw:
-    image: bwaycer/archlinux-tw
+    image: bwaycer/archlinux-tw:${BuildTag:-latest}
     build:
-      context: .
+      context: ./noTag
       dockerfile: Dockerfile
       args:
         version: latest
